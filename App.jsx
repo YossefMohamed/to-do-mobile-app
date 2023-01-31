@@ -3,25 +3,23 @@ import Form from "./Screens/Form";
 import { colors } from "./constants/colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button } from "@rneui/base";
+import Home from "./Screens/Home";
+import Header from "./components/Header";
 
 const Stack = createNativeStackNavigator();
-
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Details Screen</Text>
-      <Button title="Login" onPress={() => navigation.navigate("Home")} />
-    </View>
-  );
-}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Form} title="Login" />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Navigator initialRouteName="Form">
+        <Stack.Screen name="Home" component={Home} title="Login" />
+        <Stack.Screen
+          name="Login"
+          component={Form}
+          options={{
+            header: ({ navigation }) => <Header />,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

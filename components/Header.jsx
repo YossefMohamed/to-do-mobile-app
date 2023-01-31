@@ -1,13 +1,19 @@
-import { Text, View } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { Text, View, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../constants/colors";
+import Constants from "expo-constants";
 
 const Header = () => {
   return (
     <View style={styles.header}>
-      <Text style={styles.logo}>To-Do</Text>
-
-      <Ionicons name="menu" size={32} color={colors.tmain} />
+      <Text style={styles.logo}>ToDo</Text>
+      <TouchableOpacity>
+        <MaterialCommunityIcons
+          name="login-variant"
+          size={30}
+          color={colors.tsecondary}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -21,12 +27,13 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 10,
-    marginTop: 25,
+    marginTop: Constants.statusBarHeight,
   },
   logo: {
     fontSize: 25,
     color: colors.tsecondary,
     fontWeight: "bold",
+    textTransform: "uppercase",
   },
 };
 export default Header;
