@@ -1,27 +1,42 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { colors } from "../constants/colors";
-import React from "react-native";
+import React from "react";
 import { Button } from "@rneui/base";
+import { Input } from "@rneui/themed";
 const Form = ({ navigation }) => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const login = () => {
+    if (email === "test@test.test" && password === "test") {
+      return navigation.reset({
+        index: 0,
+        routes: [{ name: "Details" }],
+      });
+    }
+    Alert.alert("Error login");
+  };
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Login :</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate("Details")}
+      <Text style={styles.formTitle}>Login</Text>
+      <Input
+        placeholder="Email"
+        onChangeText={(text) => setEmail(text)}
+        value={email}
       />
+      <Input
+        placeholder="Password"
+        onChangeText={(password) => setPassword(password)}
+        value={password}
+      />
+      <Button title="Login" onPress={login} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    borderBottomWidth: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 5,
-    borderBottomColor: colors.main,
+  formTitle: {
+    textAlign: "left",
+    fontSize: 35,
   },
 });
 
