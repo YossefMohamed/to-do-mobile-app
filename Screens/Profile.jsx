@@ -19,18 +19,7 @@ const Resume = () => {
       </View>
       <View style={styles.body}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Education</Text>
-          <View style={styles.sectionContent}>
-            <Text style={styles.sectionItem}>
-              B.S. in Computer Science, XYZ University
-            </Text>
-            <Text style={styles.sectionItem}>
-              M.S. in Computer Science, ABC University
-            </Text>
-          </View>
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Experience</Text>
+          <Text style={styles.sectionTitle}>Tasks Report :</Text>
           <View style={styles.sectionContent}>
             <View style={styles.sectionItem}>
               <Text style={styles.sectionItemTitle}>
