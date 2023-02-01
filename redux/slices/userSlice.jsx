@@ -62,7 +62,7 @@ export const signup = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/signup",
+        "http://192.168.0.181:5000/api/users/signup",
         {
           email: args.email,
           name: args.name,
@@ -70,11 +70,13 @@ export const signup = createAsyncThunk(
           passwordConfirmation: args.passwordConfirm,
         }
       );
+
       return data.data.user;
     } catch (err) {
-      err.response.data.error.map((err) => console.log(err.message));
-
-      return rejectWithValue(err.response.data.error);
+      console.log(err);
+      return err.response
+        ? rejectWithValue(err.response.data.error)
+        : rejectWithValue(["Server Error"]);
     }
   }
 );
@@ -125,10 +127,11 @@ const userSlice = createSlice({
     builder.addCase(signup.fulfilled, (state, action) => {
       state.user = action.payload;
       state.loading = false;
+      state.error = [];
     });
     builder.addCase(signup.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = [];
     });
     builder.addCase(signup.rejected, (state, action) => {
       state.loading = false;
@@ -137,11 +140,12 @@ const userSlice = createSlice({
 
     builder.addCase(signin.fulfilled, (state, action) => {
       state.user = action.payload;
+      state.error = [];
       state.loading = false;
     });
     builder.addCase(signin.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = [];
     });
     builder.addCase(signin.rejected, (state, action) => {
       state.loading = false;
@@ -154,12 +158,12 @@ const userSlice = createSlice({
     });
     builder.addCase(getCurrentUser.pending, (state, action) => {
       state.loading = true;
-      state.error = "";
+      state.error = [];
     });
 
     builder.addCase(getCurrentUser.rejected, (state, action) => {
       state.user = {};
-      state.error = "";
+      state.error = [];
     });
     builder.addCase(signoutCurrentUser.fulfilled, (state, action) => {
       state.user = {};
