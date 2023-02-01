@@ -6,19 +6,24 @@ import {
   Pressable,
   TouchableOpacity,
 } from "react-native";
-import { colors } from "../constants/colors";
 import React from "react";
 import { Input } from "@rneui/themed";
+import CustomButton from "../components/CustomButton";
+import { useDispatch } from "react-redux";
+import { changeToDarkTheme } from "../redux/slices/ThemeSlice";
 const Form = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const dispatch = useDispatch();
   const login = () => {
     if (email === "test@test.test" && password === "test") {
-      return navigation.reset({
+      navigation.reset({
         index: 0,
         routes: [{ name: "Home" }],
       });
     }
+    dispatch(changeToDarkTheme());
+
     Alert.alert("Error login");
   };
   return (
@@ -36,11 +41,7 @@ const Form = ({ navigation }) => {
           value={password}
           secureTextEntry={true}
         />
-        <TouchableOpacity>
-          <Pressable style={styles.button} onPress={login}>
-            <Text style={styles.buttonText}>Login</Text>
-          </Pressable>
-        </TouchableOpacity>
+        <CustomButton title="Login" onPressAction={login} />
       </View>
     </View>
   );
@@ -49,7 +50,7 @@ const Form = ({ navigation }) => {
 const styles = StyleSheet.create({
   formTitle: {
     textAlign: "left",
-    fontSize: 35,
+    fontSize: 40,
     fontWeight: "bold",
   },
   container: {
@@ -61,24 +62,8 @@ const styles = StyleSheet.create({
     columnGap: 150,
   },
   formContainer: {
-    height: "45%",
+    height: "55%",
     justifyContent: "space-between",
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: colors.main,
-  },
-  buttonText: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "white",
   },
 });
 
