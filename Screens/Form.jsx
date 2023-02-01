@@ -9,22 +9,18 @@ import {
 import React from "react";
 import { Input } from "@rneui/themed";
 import CustomButton from "../components/CustomButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeToDarkTheme } from "../redux/slices/ThemeSlice";
+import { signin } from "../redux/slices/userSlice";
+import axios from "axios";
 const Form = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const dispatch = useDispatch();
-  const login = () => {
-    if (email === "test@test.test" && password === "test") {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Home" }],
-      });
-    }
-    dispatch(changeToDarkTheme());
-
-    Alert.alert("Error login");
+  const { userState } = useSelector((state) => state);
+  console.log(userState);
+  const login = async () => {
+    dispatch(signin({ email, password }));
   };
   return (
     <View style={styles.container}>
