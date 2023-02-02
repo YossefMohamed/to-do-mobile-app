@@ -3,8 +3,14 @@ import { Text, View } from "react-native";
 import { Button } from "@rneui/base";
 import { ListItem, Avatar, Input } from "@rneui/themed";
 import CustomButton from "../components/CustomButton";
+import { addToTasks } from "../redux/slices/TasksSlice";
+import { useDispatch } from "react-redux";
 function Home({ navigation }) {
   const [task, setTask] = React.useState("");
+  const dispatch = useDispatch();
+  const onPressAddToTasks = () => {
+    dispatch(addToTasks(task));
+  };
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.addButton}>
@@ -14,7 +20,7 @@ function Home({ navigation }) {
           onChange={(text) => setTask(text)}
           style={styles.addInput}
         />
-        <CustomButton title={"Add"} />
+        <CustomButton title={"Add"} onPressAction={onPressAddToTasks} />
       </View>
 
       <ListItem bottomDivider>
@@ -54,11 +60,7 @@ function Home({ navigation }) {
 
 const styles = {
   addButton: {
-    display: "flex",
     marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
   },
 };
 export default Home;
