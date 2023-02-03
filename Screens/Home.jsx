@@ -1,15 +1,17 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { Button } from "@rneui/base";
 import { ListItem, Avatar, Input } from "@rneui/themed";
 import CustomButton from "../components/CustomButton";
 import { addToTasks } from "../redux/slices/TasksSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ScrollView } from "native-base";
 function Home({ navigation }) {
   const [task, setTask] = React.useState("");
   const dispatch = useDispatch();
+  const { tasksState } = useSelector((state) => state);
   const onPressAddToTasks = () => {
-    dispatch(addToTasks(task));
+    console.log(task);
+    task && dispatch(addToTasks({ content: task, state: "pendding" }));
   };
   return (
     <View style={{ flex: 1 }}>
@@ -17,43 +19,42 @@ function Home({ navigation }) {
         <Input
           placeholder="Add Task"
           value={task}
-          onChange={(text) => setTask(text)}
+          onChangeText={(text) => setTask(text)}
           style={styles.addInput}
         />
         <CustomButton title={"Add"} onPressAction={onPressAddToTasks} />
       </View>
-
-      <ListItem bottomDivider>
-        <Avatar
-          rounded
-          icon={{
-            name: "done",
-            type: "material",
-            size: 26,
-          }}
-          containerStyle={{ backgroundColor: "green" }}
-        />
-        <ListItem.Content>
-          <ListItem.Title>Alba King</ListItem.Title>
-          <ListItem.Subtitle>Vice President</ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
-
-      <ListItem bottomDivider>
-        <Avatar
-          rounded
-          icon={{
-            name: "edit",
-            type: "material",
-            size: 20,
-          }}
-          containerStyle={{ backgroundColor: "gold" }}
-        />
-        <ListItem.Content>
-          <ListItem.Title>Alba Kinsg</ListItem.Title>
-          <ListItem.Subtitle>Vice President</ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
+      <ScrollView>
+        {tasksState.tasks.map((task) => (
+          <ListItem bottomDivider>
+            {task.state === "pendding" ? (
+              <Avatar
+                rounded
+                icon={{
+                  name: "edit",
+                  type: "material",
+                  size: 20,
+                }}
+                containerStyle={{ backgroundColor: "gold" }}
+              />
+            ) : (
+              <Avatar
+                rounded
+                icon={{
+                  name: "done",
+                  type: "material",
+                  size: 26,
+                }}
+                containerStyle={{ backgroundColor: "green" }}
+              />
+            )}
+            <ListItem.Content>
+              <ListItem.Title>{task.content}</ListItem.Title>
+              <ListItem.Subtitle>{task.state}</ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </ScrollView>
     </View>
   );
 }
