@@ -4,7 +4,6 @@ import { ListItem, Avatar, Input } from "@rneui/themed";
 import CustomButton from "../components/CustomButton";
 import { addToTasks } from "../redux/slices/TasksSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView } from "native-base";
 function Home({ navigation }) {
   const [task, setTask] = React.useState("");
   const dispatch = useDispatch();
@@ -24,8 +23,8 @@ function Home({ navigation }) {
         />
         <CustomButton title={"Add"} onPressAction={onPressAddToTasks} />
       </View>
-      <ScrollView>
-        {tasksState.tasks.map((task) => (
+      <View>
+        {[].map((task) => (
           <ListItem bottomDivider>
             {task.state === "pendding" ? (
               <Avatar
@@ -54,7 +53,7 @@ function Home({ navigation }) {
             </ListItem.Content>
           </ListItem>
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 }
